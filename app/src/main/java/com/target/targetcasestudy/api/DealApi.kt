@@ -12,5 +12,5 @@ interface DealApi {
   fun retrieveDeals(): Call<DealResponse>
 
   @GET("${BASE_URL}deals/{dealId}")
-  fun retrieveDeal(@Path("dealId") dealId: String): Call<Deal>
+  fun retrieveDeal(@Path("dealId") dealId: String): Call<Deal_orig>
 }

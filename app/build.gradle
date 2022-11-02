@@ -53,6 +53,9 @@ dependencies {
   implementation 'com.google.dagger:hilt-android:2.42'
   kapt 'com.google.dagger:hilt-compiler:2.42'
 
+  // OKHttpInterceptor
+  implementation("com.localebro:okhttpprofiler:1.0.8")
+
   // Testing
   testImplementation 'junit:junit:4.13.2'
   androidTestImplementation 'androidx.test:runner:1.4.0'

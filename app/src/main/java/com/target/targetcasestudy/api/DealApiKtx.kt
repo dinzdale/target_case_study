@@ -1,9 +1,11 @@
 package com.target.targetcasestudy.api
 
+import com.target.targetcasestudy.model.Deal
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface DealApiKtx {
+
 
   @GET("${BASE_URL}deals")
   suspend fun retrieveDeals(): DealResponse

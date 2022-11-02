@@ -1,6 +1,6 @@
 package com.target.targetcasestudy.api
 
-data class Deal(
+data class Deal_orig(
   val id: String,
 
   val title: String,

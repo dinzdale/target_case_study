@@ -9,5 +9,5 @@ interface DealApiRx {
     fun retrieveDeals(): Single<DealResponse>
 
     @GET("${BASE_URL}deals/{dealId}")
-    fun retrieveDeal(@Path("dealId") dealId: String): Single<Deal>
+    fun retrieveDeal(@Path("dealId") dealId: String): Single<Deal_orig>
 }

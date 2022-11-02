@@ -1,10 +1,10 @@
 package com.target.targetcasestudy.api
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = true)
+import com.google.gson.annotations.SerializedName
+import com.target.targetcasestudy.model.Deal
+
 data class DealResponse(
-  @Json(name = "products")
+  @SerializedName("products")
   val deals: List<Deal>
 )
