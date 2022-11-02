@@ -21,7 +21,7 @@ class DealsService(){
     private val tag = DealsService::class.java.simpleName
 
     //private val domain = context.getString(R.string.schema)
-
+    val BASE_URL = "https://api.target.com/mobile_case_study_deals/v1/"
     private val client: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
@@ -34,10 +34,10 @@ class DealsService(){
     private val retrofit: Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(client)
         .addConverterFactory(GsonConverterFactory.create()).build()
     private val apiService: DealApiKtx = retrofit.create(DealApiKtx::class.java)
-    private val headerMap = hashMapOf<String, String>(
-        //"User-Agent" to context.applicationInfo.packageName,
-        //"X-API-Key" to context.getString(R.string.api_key)
-    )
+//    private val headerMap = hashMapOf<String, String>(
+//        //"User-Agent" to context.applicationInfo.packageName,
+//        //"X-API-Key" to context.getString(R.string.api_key)
+//    )
 
 
     suspend fun retrieveDeals(): Result<DealsResponse> {
