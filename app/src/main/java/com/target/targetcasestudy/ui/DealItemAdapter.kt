@@ -15,7 +15,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.target.targetcasestudy.R
 import com.target.targetcasestudy.model.Product
 
-class DealItemAdapter(val dealList: List<Product>, val context:Context) : RecyclerView.Adapter<DealItemViewHolder>() {
+class DealItemAdapter(val dealList: List<Product>, val context: Context) :
+    RecyclerView.Adapter<DealItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,12 +29,24 @@ class DealItemAdapter(val dealList: List<Product>, val context:Context) : Recycl
     }
 
     override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
-        viewHolder.salePrice.text = dealList[position].salePrice?.displayString ?: ""
-        viewHolder.regPrice.text = context.getString(R.string.reg_price,dealList[position].regularPrice?.displayString)
+        dealList[position].salePrice?.displayString?.also {
+            viewHolder.salePrice.text = it
+            viewHolder.regPrice.text =
+                context.getString(R.string.reg_price,
+                    dealList[position].regularPrice?.displayString)
+
+        } ?: apply {
+            viewHolder.salePrice.text = ""
+            viewHolder.regPrice.text = dealList[position].regularPrice?.displayString
+
+        }
         viewHolder.title.text = dealList[position].title
         viewHolder.fulfillment.text = dealList[position].fulfillment
+        viewHolder.availability.text = dealList[position].availability
+        viewHolder.aisle.text = context.getString(R.string.in_aisle, dealList[position].aisle)
         dealList[position].imageUrl?.also {
-            Glide.with(context).load(it).apply(RequestOptions().transform(RoundedCorners(50))).placeholder(R.drawable.ic_launcher_foreground).into(viewHolder.productImage)
+            Glide.with(context).load(it).apply(RequestOptions().transform(RoundedCorners(50)))
+                .placeholder(R.drawable.ic_launcher_foreground).into(viewHolder.productImage)
         }
     }
 }
@@ -44,4 +57,6 @@ class DealItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     val regPrice: TextView = itemView.findViewById(R.id.reg_price_tv)
     val title: TextView = itemView.findViewById(R.id.title_tv)
     val fulfillment: TextView = itemView.findViewById(R.id.fulfillment_tv)
+    val availability: TextView = itemView.findViewById(R.id.availability_tv)
+    val aisle: TextView = itemView.findViewById(R.id.aisle_tv)
 }

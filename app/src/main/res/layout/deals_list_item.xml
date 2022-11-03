@@ -12,13 +12,14 @@
         app:layout_constraintEnd_toEndOf="@+id/title_tv"
         app:layout_constraintStart_toStartOf="@+id/product_image"
         app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/product_image"
-        android:layout_width="180dp"
+        android:layout_width="135dp"
         android:layout_height="180dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="h,1:1"
@@ -27,55 +28,82 @@
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
-        android:id="@+id/sale_price_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="@color/red_color"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/product_image"
-        app:layout_constraintTop_toTopOf="@+id/product_image" />
-
-    <TextView
-        android:id="@+id/reg_price_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/sale_price_tv"
-        app:layout_constraintStart_toEndOf="@+id/sale_price_tv" />
-
-    <TextView
         android:id="@+id/fulfillment_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@color/gray_color"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@+id/sale_price_tv"
-        app:layout_constraintTop_toBottomOf="@+id/sale_price_tv" />
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="@+id/price_row"
+        app:layout_constraintTop_toBottomOf="@+id/price_row" />
 
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center|start"
         android:maxLines="3"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="@android:color/black"
-        android:textSize="20sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/fulfillment_tv"
+        app:layout_constraintStart_toStartOf="@+id/price_row"
         app:layout_constraintTop_toBottomOf="@+id/fulfillment_tv" />
+
+    <TextView
+        android:id="@+id/availability_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@android:color/holo_green_dark"
+        app:layout_constraintStart_toStartOf="@+id/price_row"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+
+    <TextView
+        android:id="@+id/aisle_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/gray_color"
+        app:layout_constraintStart_toEndOf="@+id/availability_tv"
+        app:layout_constraintTop_toTopOf="@+id/availability_tv" />
+
+    <LinearLayout
+        android:id="@+id/price_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toTopOf="@+id/product_image">
+
+        <TextView
+            android:id="@+id/sale_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/red_color"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/reg_price_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
