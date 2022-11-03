@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.target.targetcasestudy.R
@@ -34,6 +35,7 @@ class DealListFragment : Fragment() {
                 view.findViewById<RecyclerView>(R.id.recycler_view).adapter =
                     DealItemAdapter(it.products, requireContext()) { row, id ->
                         dealsViewModel.selecedDealId = id
+                        findNavController().navigate(R.id.action_dealListFragment_to_productDetailsFragment)
                         Log.d("", "row : ${row}  id: ${id} clicked")
                     }
             }

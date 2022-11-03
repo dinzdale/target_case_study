@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
-        android:name="com.target.targetcasestudy.ProductDetailsFragment"
+        android:name="com.target.targetcasestudy.ui.ProductDetailsFragment"
         android:label="fragment_product_details"
         tools:layout="@layout/fragment_product_details" />
 </navigation>
