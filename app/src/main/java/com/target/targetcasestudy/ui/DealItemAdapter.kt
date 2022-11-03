@@ -1,6 +1,7 @@
 package com.target.targetcasestudy.ui
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.RoundedCorner
 import android.view.View
@@ -15,8 +16,9 @@ import com.bumptech.glide.request.RequestOptions
 import com.target.targetcasestudy.R
 import com.target.targetcasestudy.model.Product
 
-class DealItemAdapter(val dealList: List<Product>, val context: Context) :
-    RecyclerView.Adapter<DealItemViewHolder>() {
+class DealItemAdapter(val dealList: List<Product>, val context: Context,
+    val onClick: (Int, Int) -> Unit) :
+    RecyclerView.Adapter<DealItemAdapter.DealItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -29,6 +31,7 @@ class DealItemAdapter(val dealList: List<Product>, val context: Context) :
     }
 
     override fun onBindViewHolder(viewHolder: DealItemViewHolder, position: Int) {
+        viewHolder.rowPosition = position
         dealList[position].salePrice?.displayString?.also {
             viewHolder.salePrice.text = it
             viewHolder.regPrice.text =
@@ -49,14 +52,22 @@ class DealItemAdapter(val dealList: List<Product>, val context: Context) :
                 .placeholder(R.drawable.ic_launcher_foreground).into(viewHolder.productImage)
         }
     }
-}
 
-class DealItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val productImage: ImageView = itemView.findViewById(R.id.product_image)
-    val salePrice: TextView = itemView.findViewById(R.id.sale_price_tv)
-    val regPrice: TextView = itemView.findViewById(R.id.reg_price_tv)
-    val title: TextView = itemView.findViewById(R.id.title_tv)
-    val fulfillment: TextView = itemView.findViewById(R.id.fulfillment_tv)
-    val availability: TextView = itemView.findViewById(R.id.availability_tv)
-    val aisle: TextView = itemView.findViewById(R.id.aisle_tv)
+
+    inner class DealItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var rowPosition = -1
+        val productImage: ImageView = itemView.findViewById(R.id.product_image)
+        val salePrice: TextView = itemView.findViewById(R.id.sale_price_tv)
+        val regPrice: TextView = itemView.findViewById(R.id.reg_price_tv)
+        val title: TextView = itemView.findViewById(R.id.title_tv)
+        val fulfillment: TextView = itemView.findViewById(R.id.fulfillment_tv)
+        val availability: TextView = itemView.findViewById(R.id.availability_tv)
+        val aisle: TextView = itemView.findViewById(R.id.aisle_tv)
+
+        init {
+            itemView.setOnClickListener {
+                onClick(rowPosition,dealList[rowPosition].id)
+            }
+        }
+    }
 }

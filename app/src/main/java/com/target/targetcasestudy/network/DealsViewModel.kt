@@ -12,7 +12,7 @@ import retrofit2.http.Path
 class DealsViewModel : ViewModel() {
 
     val dealsRepository = DealsRepository()
-
+    var selecedDealId = -1
     fun retrieveDeal(dealId: String): LiveData<Result<DealResponse>> {
         val result = MutableLiveData<Result<DealResponse>>()
         viewModelScope.launch {

@@ -31,8 +31,10 @@ class DealListFragment : Fragment() {
         dealsViewModel.retrieveDeals().observe(viewLifecycleOwner) {
             it.onSuccess {
                 view.findViewById<RecyclerView>(R.id.recycler_view).adapter =
-                    DealItemAdapter(it.products, requireContext())
-                Log.d("", "${it.products.size} found")
+                    DealItemAdapter(it.products, requireContext()) { row, id ->
+                        dealsViewModel.selecedDealId = id
+                        Log.d("", "row : ${row}  id: ${id} clicked")
+                    }
             }
             it.onFailure {
                 Log.d("", it.message, it)
