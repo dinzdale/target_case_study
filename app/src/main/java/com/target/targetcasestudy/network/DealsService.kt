@@ -13,26 +13,29 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Path
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 //class DealsService(val context: Context)
-class DealsService(){
+@Singleton
+class DealsService @Inject constructor(val retrofit:Retrofit){
 
     private val tag = DealsService::class.java.simpleName
 
     //private val domain = context.getString(R.string.schema)
     val BASE_URL = "https://api.target.com/mobile_case_study_deals/v1/"
-    private val client: OkHttpClient by lazy {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
-        val builder = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(loggingInterceptor).addInterceptor(OkHttpProfilerInterceptor())
-        }
-        builder.build()
-    }
-    private val retrofit: Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(client)
-        .addConverterFactory(GsonConverterFactory.create()).build()
+//    private val client: OkHttpClient by lazy {
+//        val loggingInterceptor = HttpLoggingInterceptor()
+//        loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
+//        val builder = OkHttpClient.Builder()
+//        if (BuildConfig.DEBUG) {
+//            builder.addInterceptor(loggingInterceptor).addInterceptor(OkHttpProfilerInterceptor())
+//        }
+//        builder.build()
+//    }
+//    private val retrofit: Retrofit = Retrofit.Builder().baseUrl(BASE_URL).client(client)
+//        .addConverterFactory(GsonConverterFactory.create()).build()
     private val apiService: DealApiKtx = retrofit.create(DealApiKtx::class.java)
 //    private val headerMap = hashMapOf<String, String>(
 //        //"User-Agent" to context.applicationInfo.packageName,

@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.target.targetcasestudy.model.DealResponse
 import com.target.targetcasestudy.model.DealsResponse
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.http.Path
+import javax.inject.Inject
 
-class DealsViewModel : ViewModel() {
+@HiltViewModel
+class DealsViewModel @Inject constructor(private val dealsRepository: DealsRepository) : ViewModel() {
 
-    val dealsRepository = DealsRepository()
+    //val dealsRepository = DealsRepository()
     var selecedDealId = -1
     fun retrieveDeal(dealId: String): LiveData<Result<DealResponse>> {
         val result = MutableLiveData<Result<DealResponse>>()

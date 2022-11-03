@@ -16,6 +16,7 @@ import com.target.targetcasestudy.network.DealsViewModel
 
 class DealListFragment : Fragment() {
 
+    //private var dealsViewModel: DealsViewModel by activityViewModels()
     lateinit var dealsViewModel: DealsViewModel
 
     override fun onCreateView(
