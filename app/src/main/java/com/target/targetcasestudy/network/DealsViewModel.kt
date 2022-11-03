@@ -14,8 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DealsViewModel @Inject constructor(private val dealsRepository: DealsRepository) : ViewModel() {
 
-    //val dealsRepository = DealsRepository()
     var selecedDealId = -1
+
     fun retrieveDeal(dealId: String): LiveData<Result<DealResponse>> {
         val result = MutableLiveData<Result<DealResponse>>()
         viewModelScope.launch {

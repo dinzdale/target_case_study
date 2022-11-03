@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/dealListFragment">
+
+    <fragment
+        android:id="@+id/dealListFragment"
+        android:name="com.target.targetcasestudy.ui.DealListFragment"
+        android:label="fragment_deal_list"
+        tools:layout="@layout/fragment_deal_list" >
+        <action
+            android:id="@+id/action_dealListFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.target.targetcasestudy.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details" />
+</navigation>

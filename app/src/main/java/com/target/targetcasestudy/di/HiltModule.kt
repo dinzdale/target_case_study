@@ -33,7 +33,7 @@ object HiltModule {
             .addConverterFactory(GsonConverterFactory.create()).build()
     }
 
-
+    @Provides
     fun provideDealsService() = DealsService(provideRetrofit())
 
     @Provides
