@@ -1,15 +1,18 @@
 package com.target.targetcasestudy.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.target.targetcasestudy.R
 import com.target.targetcasestudy.model.Product
 
-class DealItemAdapter(val dealList: List<Product>) : RecyclerView.Adapter<DealItemViewHolder>() {
+class DealItemAdapter(val dealList: List<Product>, val context:Context) : RecyclerView.Adapter<DealItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DealItemViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,6 +29,9 @@ class DealItemAdapter(val dealList: List<Product>) : RecyclerView.Adapter<DealIt
         viewHolder.regPrice.text = dealList[position].regularPrice?.displayString ?: ""
         viewHolder.title.text = dealList[position].title
         viewHolder.fulfillment.text = dealList[position].fulfillment
+        dealList[position].imageUrl?.also {
+            Glide.with(context).load(it).placeholder(R.drawable.ic_launcher_foreground).into(viewHolder.productImage)
+        }
     }
 }
 
