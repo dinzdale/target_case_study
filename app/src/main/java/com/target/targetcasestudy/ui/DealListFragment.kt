@@ -26,11 +26,12 @@ class DealListFragment : Fragment() {
 
         view.findViewById<RecyclerView>(R.id.recycler_view).layoutManager =
             LinearLayoutManager(requireContext())
-        view.findViewById<RecyclerView>(R.id.recycler_view).adapter = DealItemAdapter()
+
         dealsViewModel = ViewModelProvider(requireActivity()).get(DealsViewModel::class.java)
         dealsViewModel.retrieveDeals().observe(viewLifecycleOwner) {
             it.onSuccess {
-                Log.d("","${it.deals.size} found")
+                view.findViewById<RecyclerView>(R.id.recycler_view).adapter = DealItemAdapter(it.products)
+                Log.d("","${it.products.size} found")
             }
             it.onFailure {
                 Log.d("",it.message,it)
