@@ -21,12 +21,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.ExperimentalUnitApi
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.target.targetcasestudy.network.DealsViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.target.targetcasestudy.R
 import com.target.targetcasestudy.model.Product
 
@@ -113,12 +118,42 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
-    @OptIn(ExperimentalGlideComposeApi::class)
+    @OptIn(ExperimentalGlideComposeApi::class, ExperimentalUnitApi::class)
     @Composable
     fun ProductCard(product: Product) {
-        Column() {
-            Card(modifier = Modifier.wrapContentSize()) {
-                GlideImage(model = product.imageUrl, contentDescription = null)
+        Card(modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight()) {
+            Column(modifier = Modifier.padding(horizontal = 10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween) {
+                GlideImage(modifier = Modifier.fillMaxWidth(), model = product.imageUrl,
+                    contentDescription = null) {
+                    it.fallback(R.drawable.ic_launcher_foreground)
+                }
+                Text(modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start)
+                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+                    product.salePrice?.displayString?.also {
+                        Text(text = it, color = Color.Red,
+                            fontSize = TextUnit(20f, TextUnitType.Sp))
+                        product.regularPrice.displayString?.also {
+                            Text(text = requireContext().getString(R.string.reg_price, it),
+                                color = Color.Black,
+                                fontSize = TextUnit(14f, TextUnitType.Sp))
+                        }
+                    } ?: apply {
+                        product.regularPrice.displayString?.also {
+                            Text(text = it,
+                                color = Color.Black,
+                                fontSize = TextUnit(14f, TextUnitType.Sp))
+                        }
+                    }
+                }
+                Text(modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight(), text = product.fulfillment, textAlign = TextAlign.Start)
             }
         }
     }

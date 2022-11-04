@@ -28,14 +28,12 @@ class DealListFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.recycler_view).layoutManager =
             LinearLayoutManager(requireContext())
 
-        //dealsViewModel = ViewModelProvider(requireActivity()).get(DealsViewModel::class.java)
         dealsViewModel.retrieveDeals().observe(viewLifecycleOwner) {
             it.onSuccess {
                 view.findViewById<RecyclerView>(R.id.recycler_view).adapter =
                     DealItemAdapter(it.products, requireContext()) { row, id ->
                         dealsViewModel.selecedDealId = id
                         findNavController().navigate(R.id.action_dealListFragment_to_productDetailsFragment)
-                        Log.d("", "row : ${row}  id: ${id} clicked")
                     }
             }
             it.onFailure {
