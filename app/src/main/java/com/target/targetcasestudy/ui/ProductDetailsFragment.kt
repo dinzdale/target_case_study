@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.target.targetcasestudy.network.DealsViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -110,11 +111,30 @@ class ProductDetailsFragment : Fragment() {
         val scrollState = rememberScrollState()
         result.value?.apply {
             onSuccess {
-                Column(verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.background(Color.LightGray).verticalScroll(scrollState)) {
-                    ProductCard(product = it)
-                    ProductDescriptionCard(product = it)
+                ConstraintLayout(modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.LightGray)) {
+                    val (products, cartBtn) = createRefs()
+                    Column(verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .constrainAs(products) {
+                                start.linkTo(parent.start)
+                                top.linkTo(parent.top)
+                                end.linkTo(parent.end)
+                                bottom.linkTo(cartBtn.top)
+                            }
+                            .verticalScroll(scrollState)) {
+                        ProductCard(product = it)
+                        ProductDescriptionCard(product = it)
+                    }
+                    Button(modifier = Modifier.constrainAs(cartBtn) {
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    }, onClick = {}) {
+                        Text("Add To Cart")
+                    }
                 }
             }
             onFailure {
