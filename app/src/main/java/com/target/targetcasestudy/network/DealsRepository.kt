@@ -1,7 +1,5 @@
 package com.target.targetcasestudy.network
 
-import com.target.targetcasestudy.model.DealResponse
-import com.target.targetcasestudy.model.DealsResponse
 import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton

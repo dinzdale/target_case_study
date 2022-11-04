@@ -1,17 +1,9 @@
 package com.target.targetcasestudy.network
 
-import android.content.Context
-
-import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
-import com.target.targetcasestudy.BuildConfig
-import com.target.targetcasestudy.api.BASE_URL
 import com.target.targetcasestudy.api.DealApiKtx
 import com.target.targetcasestudy.model.DealsResponse
-import com.target.targetcasestudy.model.DealResponse
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+import com.target.targetcasestudy.model.Product
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Path
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -36,7 +28,7 @@ class DealsService @Inject constructor(val retrofit: Retrofit) {
     }
 
 
-    suspend fun retrieveDeal(@Path("dealId") dealId: Int): Result<DealResponse> {
+    suspend fun retrieveDeal(@Path("dealId") dealId: Int): Result<Product> {
         return try {
             Result.success(apiService.retrieveDeal(dealId))
         } catch (ex: Exception) {

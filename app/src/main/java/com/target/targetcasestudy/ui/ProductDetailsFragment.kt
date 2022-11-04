@@ -6,17 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.target.targetcasestudy.network.DealsViewModel
 import androidx.fragment.app.activityViewModels
-import com.target.targetcasestudy.model.DealResponse
+import androidx.navigation.fragment.findNavController
+import com.target.targetcasestudy.R
+import com.target.targetcasestudy.model.Product
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,18 +69,51 @@ class ProductDetailsFragment : Fragment() {
     fun BuildUI() {
 
         val scaffoldState = rememberScaffoldState()
-        Scaffold(scaffoldState = scaffoldState) {
+        Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
             ShowProductDetails()
         }
+    }
 
+    @Composable
+    fun TopBar() {
+        TopAppBar() {
+            Row(Modifier
+                .background(Color.White)
+                .fillMaxSize()
+                .clickable {
+                    findNavController().popBackStack()
+                }, horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically) {
+                Image(painter = painterResource(id = R.drawable.ic_left_arrow),
+                    contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier
+                        .size(20.dp)
+                        .padding(start = 8.dp))
+                Text(stringResource(id = R.string.details), color = Color.Black, modifier = Modifier.padding(start = 50.dp))
+            }
+        }
+    }
+
+    @Composable
+    fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.retrieveDeal(
+        dealsViewModel.selecedDealId).observeAsState()) {
+        result.value?.apply {
+            onSuccess {
+                Column(verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                }
+            }
+            onFailure {
+
+            }
+        }
 
     }
 
-
     @Composable
-    fun ShowProductDetails(result: State<Result<DealResponse>?> = dealsViewModel.retrieveDeal(
-        dealsViewModel.selecedDealId).observeAsState()) {
+    fun ProductCard() {
+        Column() {
 
+        }
     }
 
     companion object {
