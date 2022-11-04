@@ -1,11 +1,15 @@
 package com.target.targetcasestudy.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,7 +44,9 @@ class ProductDetailsFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 MaterialTheme {
-                    BuildUI()
+                    Surface(color = MaterialTheme.colors.background) {
+                        BuildUI()
+                    }
                 }
             }
         }
@@ -48,9 +54,16 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
     fun BuildUI() {
-        ShowProductDetails()
+
+        val scaffoldState = rememberScaffoldState()
+        Scaffold(scaffoldState = scaffoldState) {
+            ShowProductDetails()
+        }
+
+
     }
 
 
