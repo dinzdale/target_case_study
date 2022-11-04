@@ -36,7 +36,7 @@ class DealsService @Inject constructor(val retrofit: Retrofit) {
     }
 
 
-    suspend fun retrieveDeal(@Path("dealId") dealId: String): Result<DealResponse> {
+    suspend fun retrieveDeal(@Path("dealId") dealId: Int): Result<DealResponse> {
         return try {
             Result.success(apiService.retrieveDeal(dealId))
         } catch (ex: Exception) {

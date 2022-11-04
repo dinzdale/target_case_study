@@ -5,8 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.ComposeView
-import com.target.targetcasestudy.R
+import com.target.targetcasestudy.network.DealsViewModel
+import androidx.fragment.app.activityViewModels
+import com.target.targetcasestudy.model.DealResponse
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +26,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class ProductDetailsFragment : Fragment() {
 
+    val dealsViewModel: DealsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +38,25 @@ class ProductDetailsFragment : Fragment() {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_product_details, container, false)
         return ComposeView(requireContext()).apply {
-            setContent {  }
+            setContent {
+                MaterialTheme {
+                    BuildUI()
+                }
+            }
         }
 
+
+    }
+
+    @Composable
+    fun BuildUI() {
+        ShowProductDetails()
+    }
+
+
+    @Composable
+    fun ShowProductDetails(result: State<Result<DealResponse>?> = dealsViewModel.retrieveDeal(
+        dealsViewModel.selecedDealId).observeAsState()) {
 
     }
 

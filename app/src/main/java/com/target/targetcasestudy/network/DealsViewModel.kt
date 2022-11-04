@@ -16,7 +16,7 @@ class DealsViewModel @Inject constructor(private val dealsRepository: DealsRepos
 
     var selecedDealId = -1
 
-    fun retrieveDeal(dealId: String): LiveData<Result<DealResponse>> {
+    fun retrieveDeal(dealId: Int): LiveData<Result<DealResponse>> {
         val result = MutableLiveData<Result<DealResponse>>()
         viewModelScope.launch {
             result.postValue(dealsRepository.retrieveDeal(dealId))

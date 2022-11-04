@@ -17,8 +17,7 @@ import com.target.targetcasestudy.network.DealsViewModel
 
 class DealListFragment : Fragment() {
 
-    //private var dealsViewModel: DealsViewModel by activityViewModels()
-    lateinit var dealsViewModel: DealsViewModel
+    val dealsViewModel: DealsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +28,7 @@ class DealListFragment : Fragment() {
         view.findViewById<RecyclerView>(R.id.recycler_view).layoutManager =
             LinearLayoutManager(requireContext())
 
-        dealsViewModel = ViewModelProvider(requireActivity()).get(DealsViewModel::class.java)
+        //dealsViewModel = ViewModelProvider(requireActivity()).get(DealsViewModel::class.java)
         dealsViewModel.retrieveDeals().observe(viewLifecycleOwner) {
             it.onSuccess {
                 view.findViewById<RecyclerView>(R.id.recycler_view).adapter =
