@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.target.targetcasestudy.network.DealsViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.target.targetcasestudy.R
 import com.target.targetcasestudy.model.Product
 
@@ -88,7 +90,8 @@ class ProductDetailsFragment : Fragment() {
                     contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier
                         .size(20.dp)
                         .padding(start = 8.dp))
-                Text(stringResource(id = R.string.details), color = Color.Black, modifier = Modifier.padding(start = 50.dp))
+                Text(stringResource(id = R.string.details), color = Color.Black,
+                    modifier = Modifier.padding(start = 50.dp))
             }
         }
     }
@@ -100,6 +103,7 @@ class ProductDetailsFragment : Fragment() {
             onSuccess {
                 Column(verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally) {
+                    ProductCard(product = it)
                 }
             }
             onFailure {
@@ -109,10 +113,13 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
+    @OptIn(ExperimentalGlideComposeApi::class)
     @Composable
-    fun ProductCard() {
+    fun ProductCard(product: Product) {
         Column() {
-
+            Card(modifier = Modifier.wrapContentSize()) {
+                GlideImage(model = product.imageUrl, contentDescription = null)
+            }
         }
     }
 
