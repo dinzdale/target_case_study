@@ -6,9 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -21,6 +21,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.createFontFamilyResolver
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
@@ -74,7 +78,6 @@ class ProductDetailsFragment : Fragment() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
     fun BuildUI() {
-
         val scaffoldState = rememberScaffoldState()
         Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
             ShowProductDetails()
@@ -104,11 +107,14 @@ class ProductDetailsFragment : Fragment() {
     @Composable
     fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.retrieveDeal(
         dealsViewModel.selecedDealId).observeAsState()) {
+        val scrollState = rememberScrollState()
         result.value?.apply {
             onSuccess {
                 Column(verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.background(Color.LightGray).verticalScroll(scrollState)) {
                     ProductCard(product = it)
+                    ProductDescriptionCard(product = it)
                 }
             }
             onFailure {
@@ -124,7 +130,7 @@ class ProductDetailsFragment : Fragment() {
         Card(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()) {
-            Column(modifier = Modifier.padding(horizontal = 10.dp),
+            Column(modifier = Modifier.padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween) {
                 GlideImage(modifier = Modifier.fillMaxWidth(), model = product.imageUrl,
@@ -154,6 +160,31 @@ class ProductDetailsFragment : Fragment() {
                 Text(modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(), text = product.fulfillment, textAlign = TextAlign.Start)
+            }
+        }
+    }
+
+    @OptIn(ExperimentalUnitApi::class)
+    @Composable
+    fun ProductDescriptionCard(product: Product) {
+        Card(modifier = Modifier
+            .padding(top = 20.dp)
+            .fillMaxWidth()
+            .wrapContentHeight()) {
+            Column(verticalArrangement = Arrangement.Top,
+                modifier = Modifier.padding(horizontal = 20.dp)) {
+                Text(
+                    text = stringResource(id = R.string.product_details),
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    color = Color.Black,
+                    fontSize = TextUnit(18f, TextUnitType.Sp),
+                    fontWeight = FontWeight(700),
+                )
+
+                Text(text = product.description,
+                    color = Color.Gray,
+                    fontSize = TextUnit(16f, TextUnitType.Sp),
+                    fontWeight = FontWeight(400))
             }
         }
     }
