@@ -9,6 +9,7 @@ import com.target.targetcasestudy.model.ProductResponse
 import com.target.targetcasestudy.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okio.IOException
 import javax.inject.Inject
 
 @HiltViewModel
