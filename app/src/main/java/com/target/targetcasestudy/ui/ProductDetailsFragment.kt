@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +40,10 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.target.targetcasestudy.R
+import com.target.targetcasestudy.model.ItemNotFoundResponse
 import com.target.targetcasestudy.model.Product
+import com.target.targetcasestudy.model.getErrorResponse
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,8 +85,20 @@ class ProductDetailsFragment : Fragment() {
     @Composable
     fun BuildUI() {
         val scaffoldState = rememberScaffoldState()
+        val scope = rememberCoroutineScope()
         Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
-            ShowProductDetails()
+            ShowProductDetails() {
+                it.getErrorResponse(404, ItemNotFoundResponse::class.java)?.also {
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar("${it.code}: ${it.message}")
+                    }
+                } ?: apply {
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            requireContext().getString(R.string.generic_error))
+                    }
+                }
+            }
             LaunchedEffect(true) {
                 dealsViewModel.retrieveDeal(dealsViewModel.selecedDealId)
             }
@@ -110,7 +126,8 @@ class ProductDetailsFragment : Fragment() {
     }
 
     @Composable
-    fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.productState) {
+    fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.productState,
+        onException: (Exception) -> Unit) {
         val scrollState = rememberScrollState()
         result.value?.apply {
             onSuccess {
@@ -144,7 +161,7 @@ class ProductDetailsFragment : Fragment() {
                 }
             }
             onFailure {
-
+                onException(it as Exception)
             }
         }
 
