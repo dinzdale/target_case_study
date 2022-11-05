@@ -12,6 +12,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -82,6 +83,9 @@ class ProductDetailsFragment : Fragment() {
         val scaffoldState = rememberScaffoldState()
         Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
             ShowProductDetails()
+            LaunchedEffect(true) {
+                dealsViewModel.retrieveDeal(dealsViewModel.selecedDealId)
+            }
         }
     }
 
@@ -106,8 +110,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     @Composable
-    fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.retrieveDeal(
-        dealsViewModel.selecedDealId).observeAsState()) {
+    fun ShowProductDetails(result: State<Result<Product>?> = dealsViewModel.productState) {
         val scrollState = rememberScrollState()
         result.value?.apply {
             onSuccess {
@@ -124,15 +127,18 @@ class ProductDetailsFragment : Fragment() {
                                 end.linkTo(parent.end)
                                 bottom.linkTo(cartBtn.top)
                             }
-                            .verticalScroll(scrollState).fillMaxSize()) {
+                            .verticalScroll(scrollState)
+                            .fillMaxSize()) {
                         ProductCard(product = it)
                         ProductDescriptionCard(product = it)
                     }
-                    Button(modifier = Modifier.wrapContentHeight().constrainAs(cartBtn) {
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                    }, onClick = {}) {
+                    Button(modifier = Modifier
+                        .wrapContentHeight()
+                        .constrainAs(cartBtn) {
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+                        }, onClick = {}) {
                         Text("Add To Cart")
                     }
                 }
@@ -148,7 +154,8 @@ class ProductDetailsFragment : Fragment() {
     @Composable
     fun ProductCard(product: Product) {
         Card(modifier = Modifier
-            .fillMaxWidth().wrapContentHeight()) {
+            .fillMaxWidth()
+            .wrapContentHeight()) {
             Column(modifier = Modifier.padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween) {
