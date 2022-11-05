@@ -124,11 +124,11 @@ class ProductDetailsFragment : Fragment() {
                                 end.linkTo(parent.end)
                                 bottom.linkTo(cartBtn.top)
                             }
-                            .verticalScroll(scrollState)) {
+                            .verticalScroll(scrollState).fillMaxSize()) {
                         ProductCard(product = it)
                         ProductDescriptionCard(product = it)
                     }
-                    Button(modifier = Modifier.constrainAs(cartBtn) {
+                    Button(modifier = Modifier.wrapContentHeight().constrainAs(cartBtn) {
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom)
@@ -148,8 +148,7 @@ class ProductDetailsFragment : Fragment() {
     @Composable
     fun ProductCard(product: Product) {
         Card(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()) {
+            .fillMaxWidth().wrapContentHeight()) {
             Column(modifier = Modifier.padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.SpaceBetween) {
@@ -189,8 +188,7 @@ class ProductDetailsFragment : Fragment() {
     fun ProductDescriptionCard(product: Product) {
         Card(modifier = Modifier
             .padding(top = 20.dp)
-            .fillMaxWidth()
-            .wrapContentHeight()) {
+            .fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.Top,
                 modifier = Modifier.padding(horizontal = 20.dp)) {
                 Text(

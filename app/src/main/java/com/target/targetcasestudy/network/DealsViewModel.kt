@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.target.targetcasestudy.model.DealsResponse
+import com.target.targetcasestudy.model.ProductResponse
 import com.target.targetcasestudy.model.Product
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,8 +23,8 @@ class DealsViewModel @Inject constructor(private val dealsRepository: DealsRepos
         return result
     }
 
-    fun retrieveDeals(): LiveData<Result<DealsResponse>> {
-        val result = MutableLiveData<Result<DealsResponse>>()
+    fun retrieveDeals(): LiveData<Result<ProductResponse>> {
+        val result = MutableLiveData<Result<ProductResponse>>()
         viewModelScope.launch {
             result.postValue(dealsRepository.retrieveDeals())
         }

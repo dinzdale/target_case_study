@@ -1,7 +1,7 @@
 package com.target.targetcasestudy.network
 
 import com.target.targetcasestudy.api.DealApiKtx
-import com.target.targetcasestudy.model.DealsResponse
+import com.target.targetcasestudy.model.ProductResponse
 import com.target.targetcasestudy.model.Product
 import retrofit2.Retrofit
 import retrofit2.http.Path
@@ -18,7 +18,7 @@ class DealsService @Inject constructor(val retrofit: Retrofit) {
     private val apiService: DealApiKtx = retrofit.create(DealApiKtx::class.java)
 
 
-    suspend fun retrieveDeals(): Result<DealsResponse> {
+    suspend fun retrieveDeals(): Result<ProductResponse> {
         return try {
             Result.success(apiService.retrieveDeals())
         } catch (ex: Exception) {
