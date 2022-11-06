@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.createFontFamilyResolver
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
@@ -138,7 +139,7 @@ class ProductDetailsFragment : Fragment() {
             onSuccess {
                 ConstraintLayout(modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp).background(Color.Yellow)) {
+                    .padding(8.dp)) {
                     val (products, cartBtn) = createRefs()
                     Column(verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -232,7 +233,7 @@ class ProductDetailsFragment : Fragment() {
                 Text(text = product.description,
                     color = Color.Gray,
                     fontSize = TextUnit(16f, TextUnitType.Sp),
-                    fontWeight = FontWeight(400))
+                    fontWeight = FontWeight(400), maxLines = 18, overflow = TextOverflow.Ellipsis)
             }
         }
     }
