@@ -152,7 +152,7 @@ class ProductDetailsFragment : Fragment() {
                         ProductDescriptionCard(product = it)
                     }
                     Button(modifier = Modifier
-                        .wrapContentHeight()
+                        .fillMaxWidth().wrapContentHeight().padding(horizontal = 8.dp)
                         .constrainAs(cartBtn) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
@@ -184,7 +184,7 @@ class ProductDetailsFragment : Fragment() {
                 }
                 Text(modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start)
+                    .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start, fontSize = TextUnit(18f,TextUnitType.Sp), fontWeight = FontWeight(400))
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
                     product.salePrice?.displayString?.also {
                         Text(text = it, color = Color.Red,
