@@ -1,11 +1,13 @@
 package com.target.targetcasestudy.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
@@ -229,6 +231,11 @@ class ProductDetailsFragment : Fragment() {
                     fontWeight = FontWeight(400))
             }
         }
+    }
+
+    override fun onAttach(context: Context) {
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+        super.onAttach(context)
     }
 
     companion object {
