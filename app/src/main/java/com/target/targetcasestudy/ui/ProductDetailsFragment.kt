@@ -22,7 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -36,6 +38,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.graphics.toColor
 import com.target.targetcasestudy.network.DealsViewModel
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -73,8 +76,9 @@ class ProductDetailsFragment : Fragment() {
         //return inflater.inflate(R.layout.fragment_product_details, container, false)
         return ComposeView(requireContext()).apply {
             setContent {
+
                 MaterialTheme {
-                    Surface(color = MaterialTheme.colors.background) {
+                    Surface() {
                         BuildUI()
                     }
                 }
@@ -84,13 +88,16 @@ class ProductDetailsFragment : Fragment() {
 
     }
 
+
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     @Composable
     fun BuildUI() {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
         Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
-            Box(Modifier.fillMaxSize().background(Color.LightGray), contentAlignment = Alignment.TopCenter) {
+            Box(Modifier
+                .fillMaxSize()
+                .background(Color.LightGray), contentAlignment = Alignment.TopCenter) {
                 ShowProductDetails() {
                     it.getErrorResponse(404, ItemNotFoundResponse::class.java)?.also {
                         scope.launch {
@@ -111,6 +118,7 @@ class ProductDetailsFragment : Fragment() {
         }
     }
 
+    @OptIn(ExperimentalUnitApi::class)
     @Composable
     fun TopBar() {
         TopAppBar() {
@@ -121,12 +129,13 @@ class ProductDetailsFragment : Fragment() {
                     findNavController().popBackStack()
                 }, horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(id = R.drawable.ic_left_arrow),
+                Image(painter = painterResource(id = R.drawable.ic_left_arrow_thin),
                     contentDescription = null, contentScale = ContentScale.Fit, modifier = Modifier
                         .size(20.dp)
                         .padding(start = 8.dp))
                 Text(stringResource(id = R.string.details), color = Color.Black,
-                    modifier = Modifier.padding(start = 50.dp))
+                    modifier = Modifier.padding(start = 50.dp), fontWeight = FontWeight(700),
+                    fontSize = TextUnit(18f, TextUnitType.Sp))
             }
         }
     }
@@ -161,8 +170,9 @@ class ProductDetailsFragment : Fragment() {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
-                        }, onClick = {}) {
-                        Text("Add To Cart")
+                        }, onClick = {}, colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(
+                        id = R.color.colorPrimary))) {
+                        Text(stringResource(id = R.string.add_to_cart),color = colorResource(id = R.color.whiteZZ))
                     }
                 }
             }
@@ -179,7 +189,9 @@ class ProductDetailsFragment : Fragment() {
         Card(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()) {
-            Column(modifier = Modifier.padding(horizontal = 20.dp).padding(bottom = 8.dp),
+            Column(modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top) {
                 GlideImage(modifier = Modifier.fillMaxWidth(), model = product.imageUrl,
@@ -190,9 +202,11 @@ class ProductDetailsFragment : Fragment() {
                     .fillMaxWidth()
                     .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start,
                     fontSize = TextUnit(18f, TextUnitType.Sp), fontWeight = FontWeight(400))
-                Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
+                Row(Modifier
+                    .fillMaxWidth()
+                    .padding(top = 4.dp), verticalAlignment = Alignment.Bottom) {
                     product.salePrice?.displayString?.also {
-                        Text(text = it, color = Color.Red,
+                        Text(text = it, color = colorResource(id = R.color.colorPrimary),
                             fontSize = TextUnit(20f, TextUnitType.Sp))
                         product.regularPrice.displayString?.also {
                             Text(text = requireContext().getString(R.string.reg_price, it),

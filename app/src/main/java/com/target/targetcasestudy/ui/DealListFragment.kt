@@ -62,11 +62,6 @@ class DealListFragment : Fragment() {
         (requireActivity() as AppCompatActivity).apply {
             supportActionBar?.apply {
                title = context?.getString(R.string.action_bar_title_list)
-//                setDisplayShowTitleEnabled(false)
-//                setDisplayShowTitleEnabled(true)
-                //setBackgroundDrawable(ColorDrawable(Color.White.value.toInt()))
-//               hide()
-//                show()
             }
             supportActionBar?.show()
         }

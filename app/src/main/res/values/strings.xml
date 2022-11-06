@@ -9,4 +9,5 @@
     <string name="product_details">Product details</string>
     <string name="generic_error">Sorry, an error has occurred. Please contact Target.</string>
     <string name="action_bar_title_list">List</string>
+    <string name="add_to_cart">Add to cart</string>
 </resources>
