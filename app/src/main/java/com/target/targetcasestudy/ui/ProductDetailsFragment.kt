@@ -137,17 +137,16 @@ class ProductDetailsFragment : Fragment() {
         result.value?.apply {
             onSuccess {
                 ConstraintLayout(modifier = Modifier
-                    .fillMaxWidth().wrapContentHeight()
-                    .padding(8.dp)) {
+                    .fillMaxSize()
+                    .padding(8.dp).background(Color.Yellow)) {
                     val (products, cartBtn) = createRefs()
                     Column(verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .constrainAs(products) {
                                 start.linkTo(parent.start)
-                                top.linkTo(parent.top, 65.dp)
+                                top.linkTo(parent.top)
                                 end.linkTo(parent.end)
-                                bottom.linkTo(cartBtn.top, 10.dp)
                             }
                             .verticalScroll(scrollState)
                             .fillMaxSize()) {
@@ -179,7 +178,7 @@ class ProductDetailsFragment : Fragment() {
         Card(modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()) {
-            Column(modifier = Modifier.padding(horizontal = 20.dp),
+            Column(modifier = Modifier.padding(horizontal = 20.dp).padding(bottom = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top) {
                 GlideImage(modifier = Modifier.fillMaxWidth(), model = product.imageUrl,
