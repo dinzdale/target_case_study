@@ -23,9 +23,10 @@ to grab the real deals to display in the app.  Your solution should make use of 
   Be prepared to answer questions about _why_ you chose any libraries that you add to the project.
 - This project was only tested minimally during development.  There may be bugs in the current implementation.
 - Imagine that this app will continue to grow after you are done.  Consider and be ready to discuss how the following engineering values fit into your chosen solution:
-	- Testability (Make sure the run the existing test suite!)
-	- Reusability
-	- Clean, well organized code
-	- Error handling
-	- Design accuracy on multiple screen sizes
+    - Testability (Make sure the run the existing test suite!)
+    - Reusability
+    - Clean, well organized code
+    - Error handling
+    - Design accuracy on multiple screen sizes
 - Do your best to follow modern Android conventions.
+

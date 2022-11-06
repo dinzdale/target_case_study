@@ -7,5 +7,5 @@ import javax.inject.Singleton
 @Singleton
 class DealsRepository @Inject constructor(val dealsService : DealsService) {
     suspend fun retrieveDeals() = dealsService.retrieveDeals()
-    suspend fun retrieveDeal(@Path("dealId") dealId: Int) = dealsService.retrieveDeal(dealId)
+    suspend fun retrieveDeal(dealId: Int) = dealsService.retrieveDeal(dealId)
 }

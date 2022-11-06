@@ -172,7 +172,7 @@ class ProductDetailsFragment : Fragment() {
                             bottom.linkTo(parent.bottom)
                         }, onClick = {}, colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(
                         id = R.color.colorPrimary))) {
-                        Text(stringResource(id = R.string.add_to_cart),color = colorResource(id = R.color.whiteZZ))
+                        Text(stringResource(id = R.string.add_to_cart),color = colorResource(id = R.color.white))
                     }
                 }
             }
@@ -207,7 +207,7 @@ class ProductDetailsFragment : Fragment() {
                     .padding(top = 4.dp), verticalAlignment = Alignment.Bottom) {
                     product.salePrice?.displayString?.also {
                         Text(text = it, color = colorResource(id = R.color.colorPrimary),
-                            fontSize = TextUnit(20f, TextUnitType.Sp))
+                            fontWeight = FontWeight.Bold, fontSize = TextUnit(20f, TextUnitType.Sp))
                         product.regularPrice.displayString?.also {
                             Text(text = requireContext().getString(R.string.reg_price, it),
                                 color = Color.Black,
@@ -235,7 +235,7 @@ class ProductDetailsFragment : Fragment() {
             .padding(top = 20.dp)
             .fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.Top,
-                modifier = Modifier.padding(horizontal = 20.dp)) {
+                modifier = Modifier.padding(20.dp)) {
                 Text(
                     text = stringResource(id = R.string.product_details),
                     modifier = Modifier.padding(vertical = 10.dp),
