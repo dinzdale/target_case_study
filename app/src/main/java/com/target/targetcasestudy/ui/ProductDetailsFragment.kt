@@ -89,15 +89,18 @@ class ProductDetailsFragment : Fragment() {
         val scaffoldState = rememberScaffoldState()
         val scope = rememberCoroutineScope()
         Scaffold(scaffoldState = scaffoldState, topBar = { TopBar() }) {
-            ShowProductDetails() {
-                it.getErrorResponse(404, ItemNotFoundResponse::class.java)?.also {
-                    scope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar("${it.code}: ${it.message}")
-                    }
-                } ?: apply {
-                    scope.launch {
-                        scaffoldState.snackbarHostState.showSnackbar(
-                            requireContext().getString(R.string.generic_error))
+            Box(Modifier.fillMaxSize().background(Color.LightGray), contentAlignment = Alignment.TopCenter) {
+                ShowProductDetails() {
+                    it.getErrorResponse(404, ItemNotFoundResponse::class.java)?.also {
+                        scope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                "${it.code}: ${it.message}")
+                        }
+                    } ?: apply {
+                        scope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                requireContext().getString(R.string.generic_error))
+                        }
                     }
                 }
             }
@@ -134,17 +137,17 @@ class ProductDetailsFragment : Fragment() {
         result.value?.apply {
             onSuccess {
                 ConstraintLayout(modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.LightGray)) {
+                    .fillMaxWidth().wrapContentHeight()
+                    .padding(8.dp)) {
                     val (products, cartBtn) = createRefs()
                     Column(verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier
                             .constrainAs(products) {
                                 start.linkTo(parent.start)
-                                top.linkTo(parent.top)
+                                top.linkTo(parent.top, 65.dp)
                                 end.linkTo(parent.end)
-                                bottom.linkTo(cartBtn.top)
+                                bottom.linkTo(cartBtn.top, 10.dp)
                             }
                             .verticalScroll(scrollState)
                             .fillMaxSize()) {
@@ -152,7 +155,8 @@ class ProductDetailsFragment : Fragment() {
                         ProductDescriptionCard(product = it)
                     }
                     Button(modifier = Modifier
-                        .fillMaxWidth().wrapContentHeight().padding(horizontal = 8.dp)
+                        .fillMaxWidth()
+                        .wrapContentHeight()
                         .constrainAs(cartBtn) {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
@@ -177,14 +181,15 @@ class ProductDetailsFragment : Fragment() {
             .wrapContentHeight()) {
             Column(modifier = Modifier.padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween) {
+                verticalArrangement = Arrangement.Top) {
                 GlideImage(modifier = Modifier.fillMaxWidth(), model = product.imageUrl,
                     contentDescription = null) {
                     it.fallback(R.drawable.ic_launcher_foreground)
                 }
                 Text(modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start, fontSize = TextUnit(18f,TextUnitType.Sp), fontWeight = FontWeight(400))
+                    .wrapContentHeight(), text = product.title, textAlign = TextAlign.Start,
+                    fontSize = TextUnit(18f, TextUnitType.Sp), fontWeight = FontWeight(400))
                 Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
                     product.salePrice?.displayString?.also {
                         Text(text = it, color = Color.Red,
