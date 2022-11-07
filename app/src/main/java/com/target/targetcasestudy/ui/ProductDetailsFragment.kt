@@ -170,9 +170,11 @@ class ProductDetailsFragment : Fragment() {
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
-                        }, onClick = {}, colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(
-                        id = R.color.colorPrimary))) {
-                        Text(stringResource(id = R.string.add_to_cart),color = colorResource(id = R.color.white))
+                        }, onClick = {},
+                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(
+                            id = R.color.colorPrimary))) {
+                        Text(stringResource(id = R.string.add_to_cart),
+                            color = colorResource(id = R.color.white))
                     }
                 }
             }
@@ -232,10 +234,12 @@ class ProductDetailsFragment : Fragment() {
     @Composable
     fun ProductDescriptionCard(product: Product) {
         Card(modifier = Modifier
-            .padding(top = 20.dp)
+            .padding(top = 10.dp)
             .fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.Top,
-                modifier = Modifier.padding(20.dp)) {
+                modifier = Modifier
+                    .padding(vertical = 5.dp)
+                    .padding(horizontal = 20.dp)) {
                 Text(
                     text = stringResource(id = R.string.product_details),
                     modifier = Modifier.padding(vertical = 10.dp),
@@ -245,6 +249,7 @@ class ProductDetailsFragment : Fragment() {
                 )
 
                 Text(text = product.description,
+                    modifier = Modifier.padding(bottom = 10.dp),
                     color = Color.Gray,
                     fontSize = TextUnit(16f, TextUnitType.Sp),
                     fontWeight = FontWeight(400), maxLines = 18, overflow = TextOverflow.Ellipsis)
